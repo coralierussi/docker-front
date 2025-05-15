@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue';
+
+const message = ref('Chargement en cours...');
+onMounted(async () => {
+
+  const URL = 'https://docker-back-6ysl.onrender.com/toto'
+  const response = await fetch(URL);
+  if (!response.ok) {
+    console.error('Error fetching data:', response.statusText);
+    return;
+  } else {
+    const data = await response.json();
+    message.value = data.message;
+  }
+  
+});
 </script>
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+      
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
